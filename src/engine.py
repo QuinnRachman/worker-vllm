@@ -40,6 +40,7 @@ class VLLMEngine:
     def _initialize_config(self):
         return {
             "model": os.getenv("MODEL_NAME"),
+            "revision": os.getenv("REVISION"),
             "download_dir": os.getenv("MODEL_BASE_PATH", "/runpod-volume/"),
             "quantization": os.getenv("QUANTIZATION"),
             "dtype": "auto" if os.getenv("QUANTIZATION") is None else "half",

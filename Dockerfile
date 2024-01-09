@@ -33,17 +33,20 @@ COPY src .
 
 # Setup for Option 2: Building the Image with the Model included
 ARG MODEL_NAME=""
+ARG REVISION=""
 ARG MODEL_BASE_PATH="/runpod-volume/"
 ARG HF_TOKEN=""
 ARG QUANTIZATION=""
-RUN if [ -n "$MODEL_NAME" ]; then \
-        export MODEL_BASE_PATH=$MODEL_BASE_PATH && \
-        export MODEL_NAME=$MODEL_NAME && \
-        python3.11 /download_model.py --model $MODEL_NAME; \
-    fi && \
-    if [ -n "$QUANTIZATION" ]; then \
-        export QUANTIZATION=$QUANTIZATION; \
-    fi
+
+# Uncomment this to bake the model in.
+#RUN if [ -n "$MODEL_NAME" ]; then \
+#        export MODEL_BASE_PATH=$MODEL_BASE_PATH && \
+#        export MODEL_NAME=$MODEL_NAME && \
+#        python3.11 /download_model.py --model $MODEL_NAME --revision $REVISION; \
+#    fi && \
+#    if [ -n "$QUANTIZATION" ]; then \
+#        export QUANTIZATION=$QUANTIZATION; \
+#    fi
 
 # Start the handler
 CMD ["python3.11", "/handler.py"]
